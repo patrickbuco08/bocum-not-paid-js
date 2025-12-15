@@ -13,7 +13,7 @@ npm install bocum-not-paid-js
 ### Basic Usage
 
 ```javascript
-import { bocumNotPaid } from 'bocum-not-paid-js'
+import { bocumNotPaid } from 'bocum-not-paid'
 
 bocumNotPaid({
   deadline: '2025-01-31',

@@ -1,5 +1,5 @@
 {
-  "name": "bocum-not-paid-js",
+  "name": "bocum-not-paid",
   "version": "1.0.0",
   "description": "A JavaScript library to apply payment overdue warnings to web applications",
   "main": "dist/index.js",
@@ -25,7 +25,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/patrickbuco08/bocum-not-paid-js.git"
+    "url": "git+https://github.com/patrickbuco08/bocum-not-paid-js.git"
   },
-  "homepage": "https://github.com/patrickbuco08/bocum-not-paid-js#readme"
+  "homepage": "https://github.com/patrickbuco08/bocum-not-paid-js#readme",
+  "bugs": {
+    "url": "https://github.com/patrickbuco08/bocum-not-paid-js/issues"
+  }
 }
