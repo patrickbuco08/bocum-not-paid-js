@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bocum-not-paid-js Example</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .demo-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-content">
+        <h1>bocum-not-paid-js Demo</h1>
+        <p>This page demonstrates the bocum-not-paid-js library functionality.</p>
+        
+        <div class="card">
+            <h2>Interactive Demo</h2>
+            <p>Click the buttons below to test different scenarios:</p>
+            <button onclick="testOverdue()">Test Overdue (should show warning)</button>
+            <button onclick="testNotOverdue()">Test Not Overdue (no warning)</button>
+            <button onclick="testWithGrace()">Test With Grace Period</button>
+            <button onclick="resetPage()">Reset Page</button>
+        </div>
+
+        <div class="card">
+            <h2>Sample Content</h2>
+            <p>This is some sample content that will be affected by the opacity overlay when payment is overdue.</p>
+            <ul>
+                <li>Navigation items</li>
+                <li>Forms and inputs</li>
+                <li>Interactive elements</li>
+                <li>All page content</li>
+            </ul>
+            <form>
+                <input type="text" placeholder="Sample input" style="padding: 8px; margin: 5px;">
+                <button type="submit" style="background: #28a745;">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { bocumNotPaid } from './src/index.js'
+
+        // Make function globally available for button clicks
+        window.bocumNotPaid = bocumNotPaid
+
+        window.testOverdue = () => {
+            bocumNotPaid({
+                deadline: '2020-01-01', // Past date to trigger overdue
+                message: '🚨 Invoice overdue. Please settle payment immediately.',
+                opacity: 0.3
+            })
+        }
+
+        window.testNotOverdue = () => {
+            bocumNotPaid({
+                deadline: '2030-12-31', // Future date, no warning
+                message: 'This should not appear'
+            })
+        }
+
+        window.testWithGrace = () => {
+            const today = new Date()
+            const twoDaysAgo = new Date(today)
+            twoDaysAgo.setDate(today.getDate() - 2)
+            
+            bocumNotPaid({
+                deadline: twoDaysAgo.toISOString().split('T')[0],
+                graceDays: 5, // Should not show warning yet
+                message: 'Payment due soon'
+            })
+        }
+
+        window.resetPage = () => {
+            document.body.style.opacity = '1'
+            document.body.style.pointerEvents = 'auto'
+            const banners = document.querySelectorAll('div[style*="position: fixed"]')
+            banners.forEach(banner => banner.remove())
+        }
+    </script>
+</body>
+</html>
